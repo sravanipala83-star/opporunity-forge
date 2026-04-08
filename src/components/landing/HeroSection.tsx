@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import heroDashboard from "@/assets/hero-dashboard.jpg";
 import { ArrowRight, Sparkles } from "lucide-react";
 
@@ -25,11 +26,11 @@ const HeroSection = () => (
             Opportiq helps you gain real experience, collaborate with peers, and turn your work into proof that gets you hired.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Button variant="hero" size="lg" className="gap-2">
-              Join a Project <ArrowRight size={16} />
+            <Button variant="hero" size="lg" className="gap-2" asChild>
+              <Link to="/join">Join a Project <ArrowRight size={16} /></Link>
             </Button>
-            <Button variant="hero-outline" size="lg">
-              Start Your Own
+            <Button variant="hero-outline" size="lg" asChild>
+              <Link to="/start">Start Your Own</Link>
             </Button>
           </div>
           <div className="flex items-center gap-6 mt-8 text-sm text-muted-foreground">
