@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Mail, Lock, User, Github } from "lucide-react";
+import { ArrowLeft, Mail, Lock, User, Github, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -113,7 +113,7 @@ const Field = ({
   label,
   id,
   ...props
-}: { icon: React.ComponentType<{ size?: number; className?: string }>; label: string; id: string } & React.InputHTMLAttributes<HTMLInputElement>) => (
+}: { icon: LucideIcon; label: string; id: string } & React.InputHTMLAttributes<HTMLInputElement>) => (
   <div className="space-y-1.5">
     <Label htmlFor={id}>{label}</Label>
     <div className="relative">
