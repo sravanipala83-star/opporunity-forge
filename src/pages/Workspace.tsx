@@ -14,6 +14,10 @@ import {
   GitBranch,
   Star,
   Award,
+  Inbox,
+  FileText,
+  Link2,
+  X,
 } from "lucide-react";
 
 const team = [
@@ -35,6 +39,25 @@ const messages = [
   { who: "Ravi K.", text: "Pushed the auth branch — please review when free.", time: "2m" },
   { who: "Maya S.", text: "Updated the Figma. Onboarding flows are ready.", time: "10m" },
   { who: "Aisha P.", text: "Stuck on the dashboard grid responsiveness — anyone free for a quick call?", time: "1h" },
+];
+
+const requests = [
+  {
+    name: "Karan V.",
+    role: "Backend",
+    pitch: "3 yrs Node/Postgres. Can own the API + auth this sprint. ~10 hrs/week.",
+    skills: ["Node.js", "PostgreSQL", "DevOps"],
+    resume: "karan-v-resume.pdf",
+    portfolio: "github.com/karanv",
+  },
+  {
+    name: "Priya N.",
+    role: "Design",
+    pitch: "Product designer transitioning from agency work. Strong on Figma, design systems.",
+    skills: ["Design", "Product"],
+    resume: "priya-n-portfolio.pdf",
+    portfolio: "priyan.design",
+  },
 ];
 
 const StatusIcon = ({ status }: { status: string }) => {
