@@ -158,7 +158,11 @@ const StartProject = () => {
               Next <ArrowRight size={16} />
             </Button>
           ) : (
-            <Button variant="hero" className="gap-2">
+            <Button
+              variant="hero"
+              className="gap-2"
+              onClick={() => navigate("/auth?redirect=/start")}
+            >
               <CheckCircle2 size={16} /> Sign Up to Create
             </Button>
           )}

@@ -14,6 +14,10 @@ import {
   GitBranch,
   Star,
   Award,
+  Inbox,
+  FileText,
+  Link2,
+  X,
 } from "lucide-react";
 
 const team = [
@@ -35,6 +39,25 @@ const messages = [
   { who: "Ravi K.", text: "Pushed the auth branch — please review when free.", time: "2m" },
   { who: "Maya S.", text: "Updated the Figma. Onboarding flows are ready.", time: "10m" },
   { who: "Aisha P.", text: "Stuck on the dashboard grid responsiveness — anyone free for a quick call?", time: "1h" },
+];
+
+const requests = [
+  {
+    name: "Karan V.",
+    role: "Backend",
+    pitch: "3 yrs Node/Postgres. Can own the API + auth this sprint. ~10 hrs/week.",
+    skills: ["Node.js", "PostgreSQL", "DevOps"],
+    resume: "karan-v-resume.pdf",
+    portfolio: "github.com/karanv",
+  },
+  {
+    name: "Priya N.",
+    role: "Design",
+    pitch: "Product designer transitioning from agency work. Strong on Figma, design systems.",
+    skills: ["Design", "Product"],
+    resume: "priya-n-portfolio.pdf",
+    portfolio: "priyan.design",
+  },
 ];
 
 const StatusIcon = ({ status }: { status: string }) => {
@@ -149,6 +172,52 @@ const Workspace = () => (
               <div className="flex-1">
                 <div className="text-sm"><span className="font-semibold">{m.who}</span> <span className="text-muted-foreground text-xs">· {m.time} ago</span></div>
                 <p className="text-sm text-muted-foreground mt-0.5">{m.text}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Owner: Join requests */}
+      <div className="mt-6 bg-card rounded-2xl p-6 border border-border shadow-[var(--card-shadow)]">
+        <div className="flex items-center justify-between mb-1">
+          <div className="flex items-center gap-2">
+            <Inbox size={16} className="text-secondary" />
+            <h2 className="font-bold">Join requests</h2>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-secondary/10 text-secondary font-medium">Owner view</span>
+          </div>
+          <span className="text-xs text-muted-foreground">{requests.length} pending</span>
+        </div>
+        <p className="text-xs text-muted-foreground mb-4">Review applicants — accept to add them to the team, or decline.</p>
+        <ul className="space-y-3">
+          {requests.map((r) => (
+            <li key={r.name} className="border border-border rounded-xl p-4 flex flex-col md:flex-row md:items-start gap-4">
+              <div className="flex items-start gap-3 flex-1">
+                <div className="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center font-bold text-sm shrink-0">
+                  {r.name[0]}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-baseline gap-2 flex-wrap">
+                    <span className="text-sm font-semibold">{r.name}</span>
+                    <span className="text-xs text-muted-foreground">applying as {r.role}</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">{r.pitch}</p>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {r.skills.map((s) => (
+                      <span key={s} className="text-[10px] px-2 py-0.5 rounded-full bg-secondary/10 text-secondary font-medium">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex flex-wrap gap-3 mt-2 text-xs text-muted-foreground">
+                    <span className="inline-flex items-center gap-1"><FileText size={12} /> {r.resume}</span>
+                    <span className="inline-flex items-center gap-1"><Link2 size={12} /> {r.portfolio}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex md:flex-col gap-2 md:w-32">
+                <Button variant="hero" size="sm" className="flex-1"><CheckCircle2 size={14} /> Accept</Button>
+                <Button variant="outline" size="sm" className="flex-1"><X size={14} /> Decline</Button>
               </div>
             </li>
           ))}
