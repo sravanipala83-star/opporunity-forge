@@ -43,8 +43,11 @@ const Navbar = () => {
           <Link to="/workspace" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             Workspace
           </Link>
+          <Link to="/auth?mode=login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            Log in
+          </Link>
           <Button variant="hero" size="sm" asChild>
-            <Link to="/join">Get Started</Link>
+            <Link to="/auth">Get Started</Link>
           </Button>
         </div>
         <button className="md:hidden" onClick={() => setOpen(!open)}>
@@ -65,8 +68,11 @@ const Navbar = () => {
           <Link to="/workspace" onClick={() => setOpen(false)} className="block text-sm font-medium text-muted-foreground">
             Workspace
           </Link>
+          <Link to="/auth?mode=login" onClick={() => setOpen(false)} className="block text-sm font-medium text-muted-foreground">
+            Log in
+          </Link>
           <Button variant="hero" size="sm" className="w-full" asChild>
-            <Link to="/join" onClick={() => setOpen(false)}>Get Started</Link>
+            <Link to="/auth" onClick={() => setOpen(false)}>Get Started</Link>
           </Button>
         </div>
       )}
