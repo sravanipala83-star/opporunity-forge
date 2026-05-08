@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
 const FinalCTA = () => (
@@ -17,8 +18,8 @@ const FinalCTA = () => (
         <p className="text-primary-foreground/80 text-lg max-w-lg mx-auto mb-8">
           Stop waiting. Start building real experience that speaks louder than any certificate.
         </p>
-        <Button variant="hero-outline" size="lg" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary gap-2">
-          Start Building Today <ArrowRight size={16} />
+        <Button variant="hero-outline" size="lg" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary gap-2" asChild>
+          <Link to="/join">Start Building Today <ArrowRight size={16} /></Link>
         </Button>
       </motion.div>
     </div>
