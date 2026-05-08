@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Search, Users, Sparkles, CheckCircle2 } from "lucide-react";
+import ApplyDialog from "@/components/ApplyDialog";
 
 const interests = ["Frontend", "Backend", "AI/ML", "Design", "DevOps", "Mobile", "Data Science", "Product"];
 const projectTypes = ["Practice", "Portfolio", "Startup-ready"];
@@ -19,6 +20,8 @@ const JoinProject = () => {
   const [step, setStep] = useState(0);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [applyOpen, setApplyOpen] = useState(false);
+  const [applyProject, setApplyProject] = useState<string>("");
 
   const toggleInterest = (interest: string) => {
     setSelectedInterests((prev) =>
@@ -108,7 +111,13 @@ const JoinProject = () => {
                   ))}
                 </div>
               </div>
-              <Button variant="secondary" size="sm">Apply</Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => { setApplyProject(project.name); setApplyOpen(true); }}
+              >
+                Apply
+              </Button>
             </div>
           ))}
           <p className="text-xs text-muted-foreground text-center pt-2">
@@ -162,11 +171,17 @@ const JoinProject = () => {
               Next <ArrowRight size={16} />
             </Button>
           ) : (
-            <Button variant="hero" className="gap-2">
+            <Button
+              variant="hero"
+              className="gap-2"
+              onClick={() => navigate("/auth?redirect=/join")}
+            >
               <CheckCircle2 size={16} /> Sign Up to Apply
             </Button>
           )}
         </div>
+
+        <ApplyDialog open={applyOpen} onOpenChange={setApplyOpen} projectName={applyProject} />
       </div>
     </div>
   );
