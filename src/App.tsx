@@ -7,6 +7,7 @@ import Index from "./pages/Index.tsx";
 import JoinProject from "./pages/JoinProject.tsx";
 import StartProject from "./pages/StartProject.tsx";
 import Workspace from "./pages/Workspace.tsx";
+import Auth from "./pages/Auth.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/join" element={<JoinProject />} />
           <Route path="/start" element={<StartProject />} />
           <Route path="/workspace" element={<Workspace />} />
+          <Route path="/auth" element={<Auth />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
