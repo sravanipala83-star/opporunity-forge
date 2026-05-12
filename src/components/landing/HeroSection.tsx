@@ -27,10 +27,10 @@ const HeroSection = () => (
           </p>
           <div className="flex flex-wrap gap-4">
             <Button variant="hero" size="lg" className="gap-2" asChild>
-              <Link to="/auth?role=seeker">Join a Project <ArrowRight size={16} /></Link>
+              <Link to="/join">Join a Project <ArrowRight size={16} /></Link>
             </Button>
             <Button variant="hero-outline" size="lg" asChild>
-              <Link to="/auth?role=creator">Create a Project</Link>
+              <Link to="/start">Start Your Own</Link>
             </Button>
           </div>
           <div className="flex items-center gap-6 mt-8 text-sm text-muted-foreground">

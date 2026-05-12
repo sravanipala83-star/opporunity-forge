@@ -1,34 +1,30 @@
 import { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Mail, Lock, User, Github, Search, Rocket, type LucideIcon } from "lucide-react";
+import { ArrowLeft, Mail, Lock, User, Github, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
 
 const Auth = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const initial = params.get("mode") === "login" ? "login" : "signup";
-  const presetRole = params.get("role") as "seeker" | "creator" | null;
+  const redirect = params.get("redirect") || "/";
   const [tab, setTab] = useState(initial);
   const [loading, setLoading] = useState(false);
-  const [role, setRole] = useState<"seeker" | "creator">(presetRole ?? "seeker");
-
-  const redirect = params.get("redirect") || (role === "creator" ? "/dashboard/creator" : "/dashboard/seeker");
 
   const handleSubmit = (e: React.FormEvent, mode: "login" | "signup") => {
     e.preventDefault();
     setLoading(true);
-    localStorage.setItem("opportiq_role", role);
+    // Frontend-only stub. Real auth requires Lovable Cloud.
     setTimeout(() => {
       setLoading(false);
       toast({
-        title: mode === "signup" ? `Welcome to Opportiq, ${role === "creator" ? "Creator" : "Seeker"}!` : "Signed in (preview)",
-        description: `Continuing to your ${role} dashboard.`,
+        title: mode === "signup" ? "Account ready (preview)" : "Signed in (preview)",
+        description: "Auth backend isn't connected yet — this is a UI preview.",
       });
       navigate(redirect);
     }, 700);
@@ -54,42 +50,8 @@ const Auth = () => {
             Opport<span className="text-secondary">iq</span>
           </Link>
           <p className="text-sm text-muted-foreground mb-6">
-            Build real experience. Get hired.
+            Join the collaboration network.
           </p>
-
-          <div className="mb-6">
-            <Label className="text-xs text-muted-foreground mb-2 block">I want to</Label>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => setRole("seeker")}
-                className={cn(
-                  "p-3 rounded-lg border text-left transition-all",
-                  role === "seeker"
-                    ? "bg-secondary/10 border-secondary"
-                    : "bg-card border-border hover:border-secondary/50",
-                )}
-              >
-                <Search size={16} className="text-secondary mb-1.5" />
-                <div className="font-bold text-sm">Join projects</div>
-                <div className="text-[11px] text-muted-foreground">Apply, contribute, get hired</div>
-              </button>
-              <button
-                type="button"
-                onClick={() => setRole("creator")}
-                className={cn(
-                  "p-3 rounded-lg border text-left transition-all",
-                  role === "creator"
-                    ? "bg-secondary/10 border-secondary"
-                    : "bg-card border-border hover:border-secondary/50",
-                )}
-              >
-                <Rocket size={16} className="text-secondary mb-1.5" />
-                <div className="font-bold text-sm">Create a project</div>
-                <div className="text-[11px] text-muted-foreground">Build a team, ship work</div>
-              </button>
-            </div>
-          </div>
 
           <Tabs value={tab} onValueChange={setTab} className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-6">
