@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const navLinks: { label: string; hash: string }[] = [
   { label: "Features", hash: "#features" },
@@ -46,13 +47,17 @@ const Navbar = () => {
           <Link to="/auth?mode=login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             Log in
           </Link>
+          <ThemeToggle />
           <Button variant="hero" size="sm" asChild>
             <Link to="/auth">Get Started</Link>
           </Button>
         </div>
-        <button className="md:hidden" onClick={() => setOpen(!open)}>
-          {open ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          <ThemeToggle />
+          <button onClick={() => setOpen(!open)} aria-label="Menu">
+            {open ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
       {open && (
         <div className="md:hidden bg-card border-b border-border px-6 pb-4 space-y-3">
