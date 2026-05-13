@@ -158,21 +158,21 @@ const Dashboard = () => {
             </h1>
             <Badge variant="secondary" className="text-[10px]">Preview · Mock data</Badge>
           </div>
-          <div className="flex items-center gap-2 p-1 rounded-lg bg-muted">
-            <button
-              onClick={() => setMode("seeker")}
-              className={`px-3 py-1 text-xs font-semibold rounded-md transition ${mode === "seeker" ? "bg-card shadow-sm" : "text-muted-foreground"}`}
-            >
-              Seeker mode
-            </button>
-            <button
-              onClick={() => setMode("creator")}
-              className={`px-3 py-1 text-xs font-semibold rounded-md transition ${mode === "creator" ? "bg-card shadow-sm" : "text-muted-foreground"}`}
-            >
-              Creator mode
-            </button>
-          </div>
-          <div className="flex items-center gap-2 ml-3">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 p-1 rounded-lg bg-muted">
+              <button
+                onClick={() => setMode("seeker")}
+                className={`px-3 py-1 text-xs font-semibold rounded-md transition ${mode === "seeker" ? "bg-card shadow-sm" : "text-muted-foreground"}`}
+              >
+                Seeker mode
+              </button>
+              <button
+                onClick={() => setMode("creator")}
+                className={`px-3 py-1 text-xs font-semibold rounded-md transition ${mode === "creator" ? "bg-card shadow-sm" : "text-muted-foreground"}`}
+              >
+                Creator mode
+              </button>
+            </div>
             <ThemeToggle />
             <Button variant="outline" size="sm" onClick={handleSignOut} className="hidden md:inline-flex">
               <LogOut size={14} /> Sign out
