@@ -18,6 +18,7 @@ import {
   FileText,
   Link2,
   X,
+  Eye,
 } from "lucide-react";
 
 const team = [
@@ -69,6 +70,29 @@ const StatusIcon = ({ status }: { status: string }) => {
 const Workspace = () => (
   <div className="min-h-screen bg-section-gradient">
     <div className="container max-w-6xl pt-24 pb-16">
+      {/* Preview banner */}
+      <div className="mb-6 rounded-2xl border border-secondary/30 bg-secondary/5 p-4 md:p-5 flex flex-col md:flex-row md:items-center gap-4">
+        <div className="flex items-start gap-3 flex-1">
+          <div className="w-9 h-9 rounded-xl bg-secondary/15 flex items-center justify-center shrink-0">
+            <Eye size={16} className="text-secondary" />
+          </div>
+          <div>
+            <div className="text-sm font-bold">You're viewing a sample workspace</div>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              This is what your workspace looks like once you join a project. Sign up to apply to real ones.
+            </p>
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <Button variant="hero" size="sm" asChild>
+            <Link to="/auth?mode=signup&redirect=/dashboard">Sign up to apply</Link>
+          </Button>
+          <Button variant="outline" size="sm" asChild>
+            <Link to="/join">Browse projects</Link>
+          </Button>
+        </div>
+      </div>
+
       <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors">
         <ArrowLeft size={16} /> Back to home
       </Link>
