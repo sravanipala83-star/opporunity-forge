@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   LayoutDashboard,
@@ -18,10 +18,20 @@ import {
   ArrowRight,
   ExternalLink,
   Github,
+  LogOut,
+  Linkedin,
+  Globe,
+  Save,
+  Pencil,
   type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import ThemeToggle from "@/components/ThemeToggle";
+import { toast } from "@/hooks/use-toast";
 
 type SectionKey =
   | "overview"
@@ -91,6 +101,12 @@ const mockInbox = [
 const Dashboard = () => {
   const [active, setActive] = useState<SectionKey>("overview");
   const [mode, setMode] = useState<"seeker" | "creator">("seeker");
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    toast({ title: "Signed out", description: "You've been returned to the landing page." });
+    navigate("/");
+  };
 
   return (
     <div className="min-h-screen bg-section-gradient flex">
@@ -117,7 +133,7 @@ const Dashboard = () => {
         </nav>
 
         <div className="p-4 border-t border-border">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 mb-3">
             <div className="w-9 h-9 rounded-full bg-secondary/15 text-secondary flex items-center justify-center font-bold text-sm">
               {mockUser.name[0]}
             </div>
@@ -126,6 +142,9 @@ const Dashboard = () => {
               <div className="text-xs text-muted-foreground truncate">{mockUser.email}</div>
             </div>
           </div>
+          <Button variant="outline" size="sm" className="w-full" onClick={handleSignOut}>
+            <LogOut size={14} /> Sign out
+          </Button>
         </div>
       </aside>
 
@@ -152,6 +171,12 @@ const Dashboard = () => {
             >
               Creator mode
             </button>
+          </div>
+          <div className="flex items-center gap-2 ml-3">
+            <ThemeToggle />
+            <Button variant="outline" size="sm" onClick={handleSignOut} className="hidden md:inline-flex">
+              <LogOut size={14} /> Sign out
+            </Button>
           </div>
         </div>
 
