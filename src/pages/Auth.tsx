@@ -12,7 +12,7 @@ const Auth = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const initial = params.get("mode") === "login" ? "login" : "signup";
-  const redirect = params.get("redirect") || "/";
+  const redirect = params.get("redirect") || "/dashboard";
   const [tab, setTab] = useState(initial);
   const [loading, setLoading] = useState(false);
 
