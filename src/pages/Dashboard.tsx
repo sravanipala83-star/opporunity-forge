@@ -387,29 +387,117 @@ const ApplicationsInbox = () => (
   </div>
 );
 
-const Profile = () => (
-  <div className="bg-card border border-border rounded-2xl p-6 md:p-8 shadow-[var(--card-shadow)] max-w-3xl">
-    <div className="flex items-center gap-4 mb-6">
-      <div className="w-16 h-16 rounded-full bg-secondary/15 text-secondary flex items-center justify-center font-extrabold text-xl">{mockUser.name[0]}</div>
-      <div>
-        <h2 className="text-xl font-extrabold">{mockUser.name}</h2>
-        <p className="text-sm text-muted-foreground">{mockUser.email}</p>
+const Profile = () => {
+  const [editing, setEditing] = useState(false);
+  const [profile, setProfile] = useState({
+    bio: mockUser.bio,
+    experience: mockUser.experience,
+    github: "github.com/alexmorgan",
+    linkedin: "linkedin.com/in/alexmorgan",
+    portfolio: "alexmorgan.dev",
+    skills: mockUser.skills,
+  });
+
+  const save = () => {
+    setEditing(false);
+    toast({ title: "Profile updated", description: "Your profile is now visible to project owners." });
+  };
+
+  return (
+    <div className="bg-card border border-border rounded-2xl p-6 md:p-8 shadow-[var(--card-shadow)] max-w-3xl">
+      <div className="flex items-start justify-between gap-4 mb-6">
+        <div className="flex items-center gap-4">
+          <div className="w-16 h-16 rounded-full bg-secondary/15 text-secondary flex items-center justify-center font-extrabold text-xl">{mockUser.name[0]}</div>
+          <div>
+            <h2 className="text-xl font-extrabold">{mockUser.name}</h2>
+            <p className="text-sm text-muted-foreground">{mockUser.email}</p>
+          </div>
+        </div>
+        {editing ? (
+          <Button variant="hero" size="sm" onClick={save}><Save size={14} /> Save</Button>
+        ) : (
+          <Button variant="outline" size="sm" onClick={() => setEditing(true)}><Pencil size={14} /> Edit</Button>
+        )}
+      </div>
+
+      <p className="text-xs text-muted-foreground bg-muted/40 rounded-lg px-3 py-2 mb-6">
+        Tip: Add your bio, experience, and professional links here. Project owners review this when you apply, so you don't need to repeat it on every application.
+      </p>
+
+      <div className="space-y-5">
+        <ProfileField label="Short bio" editing={editing} value={profile.bio} multiline
+          onChange={(v) => setProfile({ ...profile, bio: v })}
+          placeholder="One or two sentences about you." />
+        <ProfileField label="Experience" editing={editing} value={profile.experience}
+          onChange={(v) => setProfile({ ...profile, experience: v })}
+          placeholder="e.g. 1 yr internship, 3 side projects" />
+
+        <div>
+          <div className="text-xs font-bold uppercase text-muted-foreground mb-2">Skills</div>
+          <div className="flex flex-wrap gap-2">
+            {profile.skills.map((s) => <span key={s} className="text-xs px-2.5 py-1 rounded-full bg-secondary/10 text-secondary font-medium">{s}</span>)}
+          </div>
+        </div>
+
+        <div>
+          <div className="text-xs font-bold uppercase text-muted-foreground mb-2">Professional links</div>
+          <div className="grid sm:grid-cols-1 gap-3">
+            <LinkField icon={Github} label="GitHub" editing={editing} value={profile.github}
+              onChange={(v) => setProfile({ ...profile, github: v })} prefix="https://" />
+            <LinkField icon={Linkedin} label="LinkedIn" editing={editing} value={profile.linkedin}
+              onChange={(v) => setProfile({ ...profile, linkedin: v })} prefix="https://" />
+            <LinkField icon={Globe} label="Portfolio" editing={editing} value={profile.portfolio}
+              onChange={(v) => setProfile({ ...profile, portfolio: v })} prefix="https://" />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 p-4 rounded-xl bg-secondary/5 border border-secondary/20">
+          <Sparkles size={18} className="text-secondary shrink-0" />
+          <div>
+            <div className="text-sm font-semibold">Contribution score: {mockUser.contributionScore}/100</div>
+            <p className="text-xs text-muted-foreground">Built from tasks shipped, peer feedback, and project participation.</p>
+          </div>
+        </div>
       </div>
     </div>
-    <Field label="Bio" value={mockUser.bio} />
-    <Field label="Experience" value={mockUser.experience} />
-    <div className="mb-5">
-      <div className="text-xs font-bold uppercase text-muted-foreground mb-2">Skills</div>
-      <div className="flex flex-wrap gap-2">
-        {mockUser.skills.map((s) => <span key={s} className="text-xs px-2.5 py-1 rounded-full bg-secondary/10 text-secondary font-medium">{s}</span>)}
-      </div>
+  );
+};
+
+const ProfileField = ({
+  label, value, editing, onChange, multiline, placeholder,
+}: { label: string; value: string; editing: boolean; onChange: (v: string) => void; multiline?: boolean; placeholder?: string }) => (
+  <div>
+    <Label className="text-xs font-bold uppercase text-muted-foreground mb-1.5 block">{label}</Label>
+    {editing ? (
+      multiline ? (
+        <Textarea value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} rows={3} />
+      ) : (
+        <Input value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} />
+      )
+    ) : (
+      <div className="text-sm">{value || <span className="text-muted-foreground italic">Not set</span>}</div>
+    )}
+  </div>
+);
+
+const LinkField = ({
+  icon: Icon, label, value, editing, onChange, prefix,
+}: { icon: LucideIcon; label: string; value: string; editing: boolean; onChange: (v: string) => void; prefix?: string }) => (
+  <div className="flex items-center gap-3">
+    <div className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center shrink-0">
+      <Icon size={16} className="text-muted-foreground" />
     </div>
-    <div className="flex items-center gap-3 p-4 rounded-xl bg-secondary/5 border border-secondary/20">
-      <Sparkles size={18} className="text-secondary shrink-0" />
-      <div>
-        <div className="text-sm font-semibold">Contribution score: {mockUser.contributionScore}/100</div>
-        <p className="text-xs text-muted-foreground">Built from tasks shipped, peer feedback, and project participation.</p>
-      </div>
+    <div className="flex-1 min-w-0">
+      <div className="text-[11px] font-semibold uppercase text-muted-foreground">{label}</div>
+      {editing ? (
+        <Input value={value} onChange={(e) => onChange(e.target.value)} placeholder={`${label.toLowerCase()}.com/yourname`} className="h-8 mt-0.5" />
+      ) : value ? (
+        <a href={`${prefix || ""}${value}`} target="_blank" rel="noreferrer" className="text-sm text-secondary hover:underline truncate block">
+          {value}
+        </a>
+      ) : (
+        <span className="text-sm text-muted-foreground italic">Not set</span>
+      )}
     </div>
   </div>
 );
