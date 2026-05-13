@@ -5,10 +5,21 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { CheckCircle2, FileText, Link2, Send, Sparkles } from "lucide-react";
+import { CheckCircle2, FileText, Link2, Send, Sparkles, ChevronDown, Check, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 
-const SKILLS = ["React", "TypeScript", "Node.js", "Python", "AI/ML", "Design", "Product", "DevOps"];
+const SKILLS = [
+  "React", "Next.js", "Vue", "Angular", "Svelte",
+  "TypeScript", "JavaScript", "Node.js", "Python", "Go", "Rust", "Java", "C#", "Ruby",
+  "AI/ML", "Data Science", "PyTorch", "TensorFlow", "LLMs",
+  "UI/UX Design", "Figma", "Product Design", "Branding",
+  "Product Management", "Marketing", "Content", "Copywriting",
+  "DevOps", "AWS", "GCP", "Docker", "Kubernetes",
+  "PostgreSQL", "MongoDB", "GraphQL", "REST APIs",
+  "Mobile (iOS)", "Mobile (Android)", "React Native", "Flutter",
+];
 
 interface ApplyDialogProps {
   open: boolean;
@@ -22,6 +33,7 @@ const ApplyDialog = ({ open, onOpenChange, projectName }: ApplyDialogProps) => {
   const [portfolio, setPortfolio] = useState("");
   const [resumeName, setResumeName] = useState<string | null>(null);
   const [skills, setSkills] = useState<string[]>([]);
+  const [skillsOpen, setSkillsOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const toggleSkill = (s: string) =>
@@ -90,22 +102,55 @@ const ApplyDialog = ({ open, onOpenChange, projectName }: ApplyDialogProps) => {
 
               <div className="space-y-1.5">
                 <Label>Your skills</Label>
-                <div className="flex flex-wrap gap-2">
-                  {SKILLS.map((s) => (
+                <Popover open={skillsOpen} onOpenChange={setSkillsOpen}>
+                  <PopoverTrigger asChild>
                     <button
                       type="button"
-                      key={s}
-                      onClick={() => toggleSkill(s)}
-                      className={`px-3 py-1 rounded-full text-xs font-medium border transition-all ${
-                        skills.includes(s)
-                          ? "bg-secondary text-secondary-foreground border-secondary"
-                          : "bg-card border-border text-muted-foreground hover:border-secondary"
-                      }`}
+                      className="w-full min-h-10 flex items-center justify-between gap-2 px-3 py-2 rounded-md border border-input bg-background text-left text-sm hover:border-secondary transition-colors"
                     >
-                      {s}
+                      <span className="flex flex-wrap gap-1.5 flex-1">
+                        {skills.length === 0 ? (
+                          <span className="text-muted-foreground">Select skills…</span>
+                        ) : (
+                          skills.map((s) => (
+                            <span
+                              key={s}
+                              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary/15 text-secondary text-xs font-medium"
+                            >
+                              {s}
+                              <X
+                                size={11}
+                                onClick={(e) => { e.stopPropagation(); toggleSkill(s); }}
+                                className="cursor-pointer hover:text-foreground"
+                              />
+                            </span>
+                          ))
+                        )}
+                      </span>
+                      <ChevronDown size={14} className="text-muted-foreground shrink-0" />
                     </button>
-                  ))}
-                </div>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" align="start">
+                    <Command>
+                      <CommandInput placeholder="Search skills…" />
+                      <CommandList>
+                        <CommandEmpty>No skill found.</CommandEmpty>
+                        <CommandGroup>
+                          {SKILLS.map((s) => {
+                            const selected = skills.includes(s);
+                            return (
+                              <CommandItem key={s} value={s} onSelect={() => toggleSkill(s)}>
+                                <Check size={14} className={`mr-2 ${selected ? "opacity-100 text-secondary" : "opacity-0"}`} />
+                                {s}
+                              </CommandItem>
+                            );
+                          })}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+                <p className="text-[11px] text-muted-foreground">{skills.length} selected · search and pick multiple</p>
               </div>
 
               <div className="space-y-1.5">
