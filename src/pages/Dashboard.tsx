@@ -502,11 +502,4 @@ const LinkField = ({
   </div>
 );
 
-const Field = ({ label, value }: { label: string; value: string }) => (
-  <div className="mb-5">
-    <div className="text-xs font-bold uppercase text-muted-foreground mb-1">{label}</div>
-    <div className="text-sm">{value}</div>
-  </div>
-);
-
 export default Dashboard;
