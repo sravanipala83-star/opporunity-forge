@@ -44,8 +44,8 @@ const HeroSection = () => (
           transition={{ duration: 0.7, delay: 0.2 }}
           className="relative"
         >
-          <div className="rounded-2xl overflow-hidden shadow-2xl border border-border animate-float">
-            <img src={heroDashboard} alt="Opportiq collaborative dashboard showing team projects and contribution stats" width={1280} height={800} className="w-full" />
+          <div className="rounded-2xl overflow-hidden shadow-2xl border border-border animate-float bg-card">
+            <img src={heroDashboard} alt="Opportiq collaborative dashboard showing team projects and contribution stats" width={1280} height={800} className="w-full img-adapt" />
           </div>
         </motion.div>
       </div>
