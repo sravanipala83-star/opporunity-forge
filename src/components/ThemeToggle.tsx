@@ -8,7 +8,7 @@ export const useTheme = () => {
     if (typeof window === "undefined") return "light";
     const stored = localStorage.getItem(STORAGE_KEY) as "light" | "dark" | null;
     if (stored) return stored;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    return "light";
   });
 
   useEffect(() => {
